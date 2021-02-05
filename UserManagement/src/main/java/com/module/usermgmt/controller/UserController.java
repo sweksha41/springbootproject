@@ -19,5 +19,5 @@ public class UserController {
 	public String greeting(/*@RequestParam(value = "name", defaultValue = "World") String name*/) {
 		return "Vishal";
 	}
-
+ 
 }
