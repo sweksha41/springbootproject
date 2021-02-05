@@ -2,6 +2,8 @@ package com.module.usermgmt.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -11,19 +13,21 @@ import lombok.Data;
 
 @Data
 @Entity
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "UserData")
+//@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Table(name = "userdata")
 //@Table(name = "User", schema = "books_lib", catalog = "books_lib")
 //@Where(clause = "is_deleted = 0")
 //@EntityListeners(AuditingEntityListener.class)
 public class User {
 
-	@Id
    // @GeneratedValue(generator = "platform-uuid")
    // @GenericGenerator(name = "platform-uuid",
    // strategy = "com.example.BooksMgmt.restservice.common.validation.PlatformUUIDGenerator")
-    @Column(name = "user_id")
-    private String userId;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE )
+	@Column(name = "user_id")
+    private long userId;
 
     @Column(name = "user_name")
     private String userName;
@@ -39,7 +43,7 @@ public class User {
     
     
     @Column(name = "is_admin")
-    private String isAdmin;
+    private int isAdmin;
 
 //    @Transient
 //    private String token;
