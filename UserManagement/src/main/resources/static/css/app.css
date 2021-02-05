@@ -1,0 +1,15 @@
+var app = angular.module('app', ['ngRoute','ngResource']);
+app.config(function($routeProvider){
+    $routeProvider
+        .when('/login',{
+            templateUrl: '/views/login.html',
+            controller: 'usersController'
+        })
+        .when('/signup',{
+            templateUrl: '/views/signup.html',
+            controller: 'rolesController'
+        })
+        .otherwise(
+            { redirectTo: '/'}
+        );
+});
