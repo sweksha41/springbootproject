@@ -1,11 +1,37 @@
 <div class="section">
     <h3>{{headingTitle}}</h3>
-    <div>
-        <ul type="square">
-            <li>Administrator</li>
-            <li>Super Admin</li>
-            <li>User</li>
-            <li>View-Only</li>
-        </ul>
-    </div>
 </div>
+
+
+  <form ng-submit="registerUser()">
+      <table>
+          <tr>
+              <td>First Name</td>
+              <td><input type="text" ng-model="form.firstName" size="60" /></td>
+          </tr>
+          <tr>
+              <td>Last Name</td>
+              <td><input type="text" ng-model="form.lastName" size="60" /></td>
+          </tr>
+          <tr>
+              <td>User Name</td>
+              <td><input type="text" ng-model="form.userName" size="60" /></td>
+          </tr>
+          <tr>
+              <td>Password</td>
+              <td><input type="password" ng-model="form.password" size="60" /></td>
+          </tr>
+           <tr>
+              <td>Confirm Password</td>
+              <td><input type="password" ng-model="form.cnfpassword" size="60" /></td>
+          </tr>
+          <tr>
+              <td colspan="2"><input type="submit" value="Submit" /></td>
+          </tr>
+      </table>
+  </form>
+  
+  <div>
+  	<p style=color:red>{{errorMsg}}</p>
+  	<p style=color:green>{{successMsg}}</p>
+  </div>
