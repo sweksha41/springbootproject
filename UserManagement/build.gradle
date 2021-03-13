@@ -14,9 +14,11 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-test'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+   		 }
 
 	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
 	compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
@@ -26,6 +28,9 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc
 	compile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '9.2.0.jre8'
+	
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
 	
 
 	//lombok -- Vishal V

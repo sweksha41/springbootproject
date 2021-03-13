@@ -5,8 +5,8 @@ app.config(function($routeProvider){
             templateUrl: '/views/signup.html',
             controller: 'usersController'
         })
-        .when('/login',{
-            templateUrl: '/views/login.html',
+        .when('/signin',{
+            templateUrl: '/views/signin.html',
             controller: 'rolesController'
         })
         .otherwise(
