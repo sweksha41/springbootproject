@@ -24,7 +24,7 @@ app.controller('usersController', function($scope, $http) {
         if ($scope.form.id == -1) {
             //Id is absent so add employee - POST operation
             method = "POST";
-            url = '/v1/users/register';
+            url = '/users/register';
         } else {
             //If Id is present, it's edit operation - PUT operation
             method = "PUT";

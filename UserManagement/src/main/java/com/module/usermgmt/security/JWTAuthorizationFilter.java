@@ -1,7 +1,6 @@
 package com.module.usermgmt.security;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,33 +18,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.module.usermgmt.repository.UserDetailsServiceImpl;
 import com.module.usermgmt.util.JwtTokenUtil;
 
-import io.jsonwebtoken.Jwts;
-
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
-//	@Autowired
-//	private JwtTokenUtil jwtTokenUtil;
-//	
+	
 	@Autowired
 	UserDetailsServiceImpl userDetailsServiceImpl;
 	
-//	public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
-//		super(authenticationManager);
-//	}
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-//		String header = request.getHeader(SecurityConstants.HEADER_STRING);
-//		if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-//			chain.doFilter(request, response);
-//			return;
-//		}
-//		UsernamePasswordAuthenticationToken authToken = getAuthentication(request);
-//		SecurityContextHolder.getContext().setAuthentication(authToken);
-//		
-//		chain.doFilter(request, response);
 
 		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 		
@@ -91,18 +72,5 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		}
 		chain.doFilter(request, response);
 
-	}
-
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-
-		String header = request.getHeader(SecurityConstants.HEADER_STRING);
-		if (header != null) {
-			String user = Jwts.parser().setSigningKey(SecurityConstants.SECRET)
-					.parseClaimsJwt(header.replace(SecurityConstants.TOKEN_PREFIX, "")).getBody().getSubject();
-
-			if (user != null)
-				return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-		}
-		return null;
 	}
 }

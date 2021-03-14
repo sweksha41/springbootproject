@@ -25,8 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	
+
 	@Autowired
 	private JWTAuthorizationFilter jwtRequestFilter;
 
@@ -73,7 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
-				.antMatchers(HttpMethod.POST, "/users/authenticate").permitAll().
+				.antMatchers(HttpMethod.POST, "/users/authenticate").permitAll().antMatchers("/resources/**")
+				.permitAll().antMatchers("/css/**", "/index.html", "/views/**", "/js/**","/webjars/**").permitAll().
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
@@ -83,16 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
-
-//	@Override
-//	public void configure(HttpSecurity http) throws Exception {
-//		http.cors().and().csrf().disable().authorizeRequests()
-//				.antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
-//				.antMatchers(HttpMethod.POST, "/users/authenticate").permitAll().anyRequest().authenticated().and()
-//				.logout().permitAll().and().addFilter(new JWTAuthenticationFilter(authenticationManager()))
-//				.addFilter(new JWTAuthorizationFilter(authenticationManager())).sessionManagement()
-//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//	}
 
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
