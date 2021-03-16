@@ -1,5 +1,9 @@
 package com.module.usermgmt.controller;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.module.usermgmt.model.User;
 import com.module.usermgmt.repository.UserDetailsServiceImpl;
 import com.module.usermgmt.repository.UserRepository;
+import com.module.usermgmt.security.GrantedPermission;
+import com.module.usermgmt.util.JwtResponse;
 import com.module.usermgmt.util.JwtTokenUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -47,15 +53,12 @@ public class UserController {
 	private JwtTokenUtil jwtTokenUtil;
 	
 	
-//	public UserController(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder)
-//	{
-//		
-//	}
-	
 	
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
 
+		
+		String userName = authenticationRequest.getUsername();
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
 		final UserDetails userDetails = userDetailsServiceImpl
@@ -63,7 +66,12 @@ public class UserController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(token);
+		@SuppressWarnings("unchecked")
+		Set<GrantedPermission> authorities = (Set<GrantedPermission>) userDetails.getAuthorities();
+		
+		//return ResponseEntity.ok(token);
+		
+		return new ResponseEntity<>(new JwtResponse(token, userName, authorities), HttpStatus.OK);
 	}
 	
 	private void authenticate(String username, String password) throws Exception {
@@ -80,6 +88,16 @@ public class UserController {
 	@GetMapping("/")
 	public String greeting(/* @RequestParam(value = "name", defaultValue = "World") String name */) {
 		return "Vishal";
+	 }
+	
+	@GetMapping("/getall")
+	public List<User> getAllUsers() {
+		
+		List<User> allUsers = userRepository.findAll();
+		
+		List<User> libraryUsers = allUsers.stream().filter(e -> e.getIsAdmin() == 0).collect(Collectors.toList());
+		
+		return libraryUsers;
 	 }
  
 	@PostMapping("/register")

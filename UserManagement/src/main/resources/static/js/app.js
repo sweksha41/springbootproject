@@ -7,7 +7,11 @@ app.config(function($routeProvider){
         })
         .when('/signin',{
             templateUrl: '/views/signin.html',
-            controller: 'rolesController'
+            controller: 'usersController'
+        })
+        .when('/users',{
+            templateUrl: '/views/users.html',
+            controller: 'usersController'
         })
         .otherwise(
             { redirectTo: '/'}

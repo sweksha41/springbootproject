@@ -1,4 +1,4 @@
-app.controller('usersController', function($scope, $http) {
+app.controller('usersController', function($scope, $http, $timeout, $window) {
 	
     
 	$scope.form = {
@@ -44,6 +44,22 @@ app.controller('usersController', function($scope, $http) {
         }
     };
     
+    
+    $scope.loginUser = function(){
+    	 method = "POST";
+         url = '/users/authenticate';
+         
+         $http({
+	            method : method,
+	            url : url,
+	            data : angular.toJson($scope.form),
+	            headers : {
+	                'Content-Type' : 'application/json'
+	            }
+	        }).then( _authenticationSuccess, _authenticationError );
+    };
+    
+    
     function validate()
     {
     	var valid = true;
@@ -53,7 +69,7 @@ app.controller('usersController', function($scope, $http) {
     		valid = false;
 			message = "Password cannot be blank";
 		}
-    	else if($scope.form.userName == "")
+    	else if($scope.form.username == "")
 		{
     		valid = false;
 			message = "Username cannot be blank";
@@ -67,6 +83,41 @@ app.controller('usersController', function($scope, $http) {
     		alert(message);
     	
     	return valid;
+    }
+    
+    function _authenticationSuccess(response) {
+    	$scope.successMsg = "User loggedin";
+    	
+    	$window.localStorage.setItem('currUsername',response.data.username);
+    	$window.localStorage.setItem('currUserAuthority',response.data.authority);
+    	$window.localStorage.setItem('token',response.data.token);
+    	
+    	// $window.localStorage.currentUser = { username: response.data.username, token: response.data.token };
+
+        // add jwt token to auth header for all requests made by the $http service
+    	$http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
+    	$window.location.href = '/views/bookmanager.html';
+    	
+    	/*method = "GET";
+         url = '/views/bookmanager.html';
+         var authorization = 'Bearer '+response.data.token;
+    	
+    	$http({
+            method : method,
+            url : url,
+            headers : {
+                'Content-Type' : 'application/json',
+                'Authorization': authorization
+            }
+        }).then( _success, _error );*/
+    	
+//    	 $timeout(function() {
+//             $location.path('bookmanager.html');
+//             }, 5000);
+    };
+    
+    function _authenticationError(response) {
+    	$scope.successMsg = "Authentication failed";
     }
     
     function _success(response) {
@@ -100,6 +151,28 @@ app.controller('usersController', function($scope, $http) {
         $scope.form.password = "";
         $scope.form.cnfpassword = "";
         $scope.form.id = -1;
+    };
+  
+    $scope.getAllUsers = function() {
+    	debugger;
+    	//check if control is coming here
+    	var currUsername = $window.localStorage.getItem('currUsername');
+    	var test = currUsername;
+    	
+    	var method = "GET";
+        var url = "/users/getall";
+        var authorization = 'Bearer '+$window.localStorage.getItem('token');
+    	
+        $http({
+            method : method,
+            url : url,
+            headers : {
+                'Content-Type' : 'application/json',
+                'Authorization':authorization
+            }
+        }).then( _success, _error );
+    	
+    	//alert(test);
     };
     
 });
