@@ -1,37 +1,40 @@
-<div class="section">
-    <h3>{{headingTitle}}</h3>
-</div>
-
-
-  <form ng-submit="registerUser()">
-      <table>
-          <tr>
-              <td>First Name</td>
-              <td><input type="text" ng-model="form.firstName" size="60" /></td>
-          </tr>
-          <tr>
-              <td>Last Name</td>
-              <td><input type="text" ng-model="form.lastName" size="60" /></td>
-          </tr>
-          <tr>
-              <td>User Name</td>
-              <td><input type="text" ng-model="form.username" size="60" /></td>
-          </tr>
-          <tr>
-              <td>Password</td>
-              <td><input type="password" ng-model="form.password" size="60" /></td>
-          </tr>
-           <tr>
-              <td>Confirm Password</td>
-              <td><input type="password" ng-model="form.cnfpassword" size="60" /></td>
-          </tr>
-          <tr>
-              <td colspan="2"><input type="submit" value="Submit" /></td>
-          </tr>
-      </table>
-  </form>
-  
-  <div>
-  	<p style=color:red>{{errorMsg}}</p>
-  	<p style=color:green>{{successMsg}}</p>
+ <div style = "margin-left: 380px;  margin-top: -700px">
+	<div class="section">
+	    <h3>{{headingTitle}}</h3>
+	</div>
+	<hr></hr>
+	
+	
+	  <form ng-submit="registerUser()">
+	      <table>
+	          <tr>
+	              <td width = 170px>First Name</td>
+	              <td><input type="text" ng-model="form.firstName" size="60" /></td>
+	          </tr>
+	          <tr>
+	              <td>Last Name</td>
+	              <td><input type="text" ng-model="form.lastName" size="60" /></td>
+	          </tr>
+	          <tr>
+	              <td>User Name</td>
+	              <td><input type="text" ng-model="form.username" size="60" /></td>
+	          </tr>
+	          <tr>
+	              <td>Password</td>
+	              <td><input type="password" ng-model="form.password" size="60" /></td>
+	          </tr>
+	           <tr>
+	              <td>Confirm Password</td>
+	              <td><input type="password" ng-model="form.cnfpassword" size="60" /></td>
+	          </tr>
+	          <tr>
+	              <td colspan="2"><input type="submit" value="Submit" /></td>
+	          </tr>
+	      </table>
+	  </form>
+	  
+	  <div>
+	  	<p style=color:red>{{errorMsg}}</p>
+	  	<p style=color:green>{{successMsg}}</p>
+	  </div>
   </div>

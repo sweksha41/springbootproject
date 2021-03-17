@@ -1,19 +1,29 @@
- <form ng-submit="loginUser()">
-      <table>
-          <tr>
-              <td>User Name</td>
-              <td><input type="text" ng-model="form.username" size="60" /></td>
-          </tr>
-          <tr>
-              <td>Password</td>
-              <td><input type="password" ng-model="form.password" size="60" /></td>
-          <tr>
-              <td colspan="2"><input type="submit" value="Submit" /></td>
-          </tr>
-      </table>
-  </form>
-  
-  <div>
-  	<p style=color:red>{{errorMsg}}</p>
-  	<p style=color:green>{{successMsg}}</p>
-  </div>
+ <div style = "margin-left: 380px;  margin-top: -900px">
+
+	            <div>
+	                <h1 id="tables" style=font-size:20px>Library users</h1>
+	            </div>
+	            <hr></hr>
+	            <div ng-controller="usersController">
+	                <table>
+	                    <thead>
+	                        <tr>
+	                            <th width = 100px>Id</th>
+	                            <th></th>
+	                            <th width = 200px>First Name</th>
+	                            <th></th>
+	                            <th width = 200px>Last Name</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                        <tr ng-repeat="user in libraryUsers">
+	                            <td><a href="your-target-url"> {{user.userId}}</a></td>
+	                            <td></td>
+	                            <td>{{user.firstName}}</td>
+	                            <td></td>
+	                            <td>{{user.lastName}}</td>
+	                        </tr>
+	                    </tbody>
+	                </table>
+	            </div>
+ </div>

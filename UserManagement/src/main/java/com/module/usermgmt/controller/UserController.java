@@ -97,6 +97,8 @@ public class UserController {
 		
 		List<User> libraryUsers = allUsers.stream().filter(e -> e.getIsAdmin() == 0).collect(Collectors.toList());
 		
+		
+		
 		return libraryUsers;
 	 }
  

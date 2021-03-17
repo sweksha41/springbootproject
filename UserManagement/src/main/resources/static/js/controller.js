@@ -170,10 +170,18 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
                 'Content-Type' : 'application/json',
                 'Authorization':authorization
             }
-        }).then( _success, _error );
+        }).then( onGetUsers, _error );
     	
     	//alert(test);
     };
+    
+    
+    function onGetUsers(response)
+    {
+    	// $location.path('users').search({jsonData: response.data });
+    	$scope.libraryUsers = response.data;
+    }
+    
     
 });
  
