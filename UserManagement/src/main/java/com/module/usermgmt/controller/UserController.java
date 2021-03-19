@@ -39,41 +39,37 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
 	UserDetailsServiceImpl userDetailsServiceImpl;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
-	
-	
+
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
 
-		
 		String userName = authenticationRequest.getUsername();
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
-		final UserDetails userDetails = userDetailsServiceImpl
-				.loadUserByUsername(authenticationRequest.getUsername());
+		final UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
 		@SuppressWarnings("unchecked")
 		Set<GrantedPermission> authorities = (Set<GrantedPermission>) userDetails.getAuthorities();
-		
-		//return ResponseEntity.ok(token);
-		
+
+		// return ResponseEntity.ok(token);
+
 		return new ResponseEntity<>(new JwtResponse(token, userName, authorities), HttpStatus.OK);
 	}
-	
+
 	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -84,27 +80,34 @@ public class UserController {
 		}
 	}
 
-
 	@GetMapping("/")
 	public String greeting(/* @RequestParam(value = "name", defaultValue = "World") String name */) {
 		return "Vishal";
-	 }
-	
+	}
+
 	@GetMapping("/getall")
 	public List<User> getAllUsers() {
-		
+
 		List<User> allUsers = userRepository.findAll();
-		
+
 		List<User> libraryUsers = allUsers.stream().filter(e -> e.getIsAdmin() == 0).collect(Collectors.toList());
-		
-		
-		
 		return libraryUsers;
-	 }
- 
+	}
+
+	@GetMapping("/getdetails")
+	public List<User> getUserDetails() {
+
+		List<User> allUsers = userRepository.findAll();
+
+		List<User> libraryUsers = allUsers.stream().filter(e -> e.getIsAdmin() == 0).collect(Collectors.toList());
+		return libraryUsers;
+	}
+
+	
+	
 	@PostMapping("/register")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
-		try { 
+		try {
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 			User _user = userRepository.save(user);
 			return new ResponseEntity<>(_user, HttpStatus.CREATED);

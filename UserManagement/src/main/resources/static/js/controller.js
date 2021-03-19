@@ -154,10 +154,7 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
     };
   
     $scope.getAllUsers = function() {
-    	debugger;
     	//check if control is coming here
-    	var currUsername = $window.localStorage.getItem('currUsername');
-    	var test = currUsername;
     	
     	var method = "GET";
         var url = "/users/getall";
@@ -174,6 +171,12 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
     	
     	//alert(test);
     };
+    
+    $scope.getUserDetails = function(userId)
+    {
+    	debugger;
+    	var userId = userId;
+    }
     
     
     function onGetUsers(response)
