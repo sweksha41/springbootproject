@@ -1,4 +1,5 @@
 var app = angular.module('app', ['ngRoute','ngResource']);
+
 app.config(function($routeProvider){
     $routeProvider
         .when('/signup',{
@@ -11,6 +12,10 @@ app.config(function($routeProvider){
         })
         .when('/users',{
             templateUrl: '/views/users.html',
+            controller: 'usersController'
+        })
+        .when('/userDetails',{
+            templateUrl: '/views/userDetails.html',
             controller: 'usersController'
         })
         .otherwise(

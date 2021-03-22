@@ -9,4 +9,8 @@ import com.module.usermgmt.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByUsername(String username);
+	
+	User findByUserId(long userId);
+	
+	
 }

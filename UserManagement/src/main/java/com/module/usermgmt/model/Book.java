@@ -3,9 +3,21 @@ package com.module.usermgmt.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Books {
+import lombok.Data;
 
+@Data
+@Entity
+@Table(name = "book")
+public class Book {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "book_id")
     private long bookId;
 
@@ -20,4 +32,7 @@ public class Books {
     
     @Column(name = "book_price")
     private BigDecimal bookPrice;
+    
+  //  @OneToMany(mappedBy = "books")
+    //private List<UserBooks> userBooks;
 }

@@ -1,10 +1,30 @@
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="app" class="no-js"> <!--<![endif]-->
+ 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Books management</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body ng-controller="usersController"> 
+ <script src="/webjars/angularjs/1.8.0/angular.js"></script>
+<script src="/webjars/angularjs/1.8.0/angular-resource.js"></script>
+<script src="/webjars/angularjs/1.8.0/angular-route.js"></script>
+<script src="/js/app.js"></script>
+<link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.css">
+
+<script src="/js/controller.js"></script>
+ 
  <div style = "margin-left: 380px;  margin-top: -900px">
 
      <div>
          <h1 id="tables" style=font-size:20px>Library users</h1>
      </div>
      <hr></hr>
-     <div class="bs-component" ng-controller="usersController">
+     <div class="bs-component">
          <table class="table-striped table-hover">
              <thead>
                  <tr>
@@ -17,7 +37,7 @@
              </thead>
              <tbody>
                  <tr ng-repeat="user in libraryUsers">
-                     <td><a ng-href="#!/userDetails" ng-click="getUserDetails(user.userId)"> {{user.userId}}</a></td>
+                     <td><a ng-href="#!/userDetails" ng-click="getUserDetails(user.userId)">{{user.userId}}</a></td>
                      <td></td>
                      <td>{{user.firstName}}</td>
                      <td></td>
@@ -27,3 +47,4 @@
          </table>
      </div>
  </div>
+ </body>

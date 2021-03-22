@@ -1,29 +1,66 @@
- <div style = "margin-left: 380px;  margin-top: -900px">
+ <!--[if gt IE 8]><!--> <html lang="en" ng-app="app" class="no-js"> <!--<![endif]-->
+ 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Books management</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/app.css">
+</head>
 
+<body ng-controller="usersController"> 
+
+<script src="/js/controller.js"></script>
+
+ <script src="/webjars/angularjs/1.8.0/angular.js"></script>
+<script src="/webjars/angularjs/1.8.0/angular-resource.js"></script>
+<script src="/webjars/angularjs/1.8.0/angular-route.js"></script>
+<script src="/js/app.js"></script>
+<link rel="stylesheet" href="/webjars/bootstrap/4.6.0/css/bootstrap.css">
+ 
+ <div style = "margin-left: 380px;  margin-top: -900px">
      <div>
-         <h1 id="tables" style=font-size:20px>Library users</h1>
+         <h1 id="tables" style=font-size:20px>{{userFname}}</h1>
      </div>
      <hr></hr>
      <div class="bs-component" ng-controller="usersController">
          <table class="table-striped table-hover">
              <thead>
                  <tr>
-                     <th width = 100px>Id</th>
+                     <th width = 100px>Book Id</th>
                      <th></th>
-                     <th width = 200px>First Name</th>
+                     <th width = 200px>Book Name</th>
                      <th></th>
-                     <th width = 200px>Last Name</th>
+                     <th width = 200px>Author</th>
+                     <th></th>
+                     <th width = 200px>Issued Date</th>
+                     <th></th>
+                     <th width = 200px>Returned Date</th>
+                     <th></th>
+                     <th width = 200px>Quantity</th>
+                     <th></th>
+                     <th width = 200px>Fine</th>
                  </tr>
              </thead>
              <tbody>
-                 <tr ng-repeat="user in libraryUsers">
-                     <td><a ng-href="#!/userDetails" ng-click="getUserDetails(user.userId)"> {{user.userId}}</a></td>
+                 <tr ng-repeat="userBook in userBookList">
+                     <td><a ng-href="#!/bookDetails" ng-click="getBookDetails(userBook.bookId)"> {{userBook.bookId}}</a></td>
                      <td></td>
-                     <td>{{user.firstName}}</td>
+                     <td>{{userBook.bookName}}</td>
                      <td></td>
-                     <td>{{user.lastName}}</td>
+                     <td>{{userBook.author}}</td>
+                     <td></td>
+                     <td>{{userBook.issuedDate | date:'dd/MM/yyyy'}}</td>
+                     <td></td>
+                     <td>{{userBook.returnedDate | date:'dd/MM/yyyy'}}</td>
+                     <td></td>
+                     <td>{{userBook.quantity}}</td>
+                     <td></td>
+                     <td>{{userBook.fine}}</td>
                  </tr>
              </tbody>
          </table>
      </div>
  </div>
+ </body>

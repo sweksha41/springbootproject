@@ -1,24 +1,40 @@
 package com.module.usermgmt.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "user_books")
-public class UserBooks {
+@IdClass(UserBookId.class)
+public class UserBooks implements Serializable{
 
-	@Column(name = "user_id")
-    private long userId;
+	private static final long serialVersionUID = 1L;
 
-    @Column(name = "book_id")
-    private long bookId;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
+    private Book book;
+
+	@JsonIgnore
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 
     @Column(name = "issued_date")
     private Timestamp issuedDate;
