@@ -18,7 +18,7 @@
 
 <script src="/js/controller.js"></script>
  
- <div style = "margin-left: 380px;  margin-top: -900px">
+ <div style = "margin-left: 380px;  margin-top: -900px"> 
 
      <div>
          <h1 id="tables" style=font-size:20px>Library Books</h1>
@@ -50,6 +50,8 @@
                      <td>{{book.availableCount}}</td>
                      <td></td>
                      <td>{{book.bookPrice | number : 2}}</td>
+                     <td></td>
+                     <td><a ng-href="#!/editBook" ng-click="editBookDetails(book.bookId)">Edit</a></td>
                  </tr>
              </tbody>
          </table>

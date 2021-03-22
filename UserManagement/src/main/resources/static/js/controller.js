@@ -187,6 +187,22 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 		
 	};
 	
+	$scope.editBookDetails = function(bookId)
+	{
+		var method = "POST";
+		var url = "/books/edit";
+		var authorization = 'Bearer ' + $window.localStorage.getItem('token');
+
+		$http({
+			method : method,
+			url : url,
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : authorization
+			}
+		}).then(onEditBooks, _error);
+	};
+	
 	function onGetUsers(response) {
 		// $location.path('users').search({jsonData: response.data });
 		$scope.libraryUsers = response.data;
@@ -224,6 +240,11 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 	function onGetBooks(response)
 	{
 		$scope.libraryBooks = response.data;
+	}
+	
+	function onEditBooks(response)
+	{
+		
 	}
 
 });
