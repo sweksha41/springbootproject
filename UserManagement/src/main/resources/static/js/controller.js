@@ -13,6 +13,7 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 	$scope.headingTitle = "Register";
 	$scope.errorMsg = "";
 	$scope.successMsg = "";
+	
 
 	// HTTP POST/PUT methods for add/edit employee
 	$scope.registerUser = function() {
@@ -73,6 +74,7 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 
 		return valid;
 	}
+	
 
 	function _authenticationSuccess(response) {
 		$scope.successMsg = "User loggedin";
@@ -91,18 +93,6 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 				+ response.data.token;
 		$window.location.href = '/views/bookmanager.html';
 
-		/*
-		 * method = "GET"; url = '/views/bookmanager.html'; var authorization =
-		 * 'Bearer '+response.data.token;
-		 * 
-		 * $http({ method : method, url : url, headers : { 'Content-Type' :
-		 * 'application/json', 'Authorization': authorization } }).then(
-		 * _success, _error );
-		 */
-
-		// $timeout(function() {
-		// $location.path('bookmanager.html');
-		// }, 5000);
 	}
 
 	function _authenticationError(response) {
@@ -142,6 +132,7 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 		$scope.form.id = -1;
 	}
 
+	
 	$scope.getAllUsers = function() {
 		// check if control is coming here
 
@@ -157,9 +148,27 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 				'Authorization' : authorization
 			}
 		}).then(onGetUsers, _error);
-
-		// alert(test);
 	};
+	
+	
+	$scope.getAllBooks = function() {
+		// check if control is coming here
+
+		var method = "GET";
+		var url = "/books/getall";
+		var authorization = 'Bearer ' + $window.localStorage.getItem('token');
+
+		$http({
+			method : method,
+			url : url,
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : authorization
+			}
+		}).then(onGetBooks, _error);
+	};
+
+	
 
 	$scope.getUserDetails = function(userId) {
 
@@ -171,8 +180,12 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 	//	$rootScope.userBookList = userBookDetails.userBooks;
 		//$rootScope.userFname = userBookDetails.firstName;
 		
-	}
+	};
 	
+	$scope.getBookDetails = function(bookId)
+	{
+		
+	};
 	
 	function onGetUsers(response) {
 		// $location.path('users').search({jsonData: response.data });
@@ -206,11 +219,11 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 
 			$scope.userBookMap[user.userId] = userObj;
 		});
-		
-		var userBookDetails = $scope.userBookMap[53];
-		
-		//$scope.userBookList = userBookDetails.userBooks;
-		//$scope.userFname = userBookDetails.firstName;
+	}
+	
+	function onGetBooks(response)
+	{
+		$scope.libraryBooks = response.data;
 	}
 
 });
