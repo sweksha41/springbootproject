@@ -1,6 +1,6 @@
  <div style = "margin-left: 380px;  margin-top: -700px">
 	<div class="section">
-	    <h3>{{headingTitle}}</h3>
+	    <h3>Edit book details</h3>
 	</div>
 	<hr></hr>
 	
@@ -9,19 +9,19 @@
 	      <table>
 	          <tr>
 	              <td width = 170px>Book Name</td>
-	              <td><input type="text" ng-model="form.firstName" size="60" /></td>
+	              <td>{{bookName}}</td>
 	          </tr>
 	          <tr>
 	              <td>Author</td>
-	              <td><input type="text" ng-model="form.lastName" size="60" /></td>
+	              <td>{{author}}</td>
 	          </tr>
 	          <tr>
 	              <td>Availability</td>
-	              <td><input type="text" ng-model="form.username" size="60" /></td>
+	              <td><input type="number" ng-model="form_availability" size="60" /></td>
 	          </tr>
 	          <tr>
 	              <td>Price</td>
-	              <td><input type="password" ng-model="form.password" size="60" /></td>
+	              <td><input type="text" ng-model="form_price" size="20" /></td>
 	          </tr>
 	          <tr>
 	              <td colspan="2"><input type="submit" value="Submit" /></td>

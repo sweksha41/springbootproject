@@ -187,8 +187,16 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 		
 	};
 	
-	$scope.editBookDetails = function(bookId)
+	$scope.editBookDetails = function(book)
 	{
+	
+		$scope.$parent.bookName = book.bookName;
+		$scope.$parent.author = book.author;
+		$scope.$parent.form_availability = book.availableCount;
+		$scope.$parent.form_price = book.bookPrice;
+		
+		
+		/*
 		var method = "POST";
 		var url = "/books/edit";
 		var authorization = 'Bearer ' + $window.localStorage.getItem('token');
@@ -200,7 +208,7 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 				'Content-Type' : 'application/json',
 				'Authorization' : authorization
 			}
-		}).then(onEditBooks, _error);
+		}).then(onEditBooks, _error);*/
 	};
 	
 	function onGetUsers(response) {

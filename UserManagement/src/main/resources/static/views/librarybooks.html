@@ -41,7 +41,7 @@
              </thead>
              <tbody>
                  <tr ng-repeat="book in libraryBooks">
-                     <td><a ng-href="#!/bookDetails" ng-click="getBookDetails(book.bookId)">{{book.bookId}}</a></td>
+                     <td><a ng-href="#!/editBook" ng-click="editBookDetails(book)">{{book.bookId}}</a></td>
                      <td></td>
                      <td>{{book.bookName}}</td>
                      <td></td>
@@ -51,7 +51,6 @@
                      <td></td>
                      <td>{{book.bookPrice | number : 2}}</td>
                      <td></td>
-                     <td><a ng-href="#!/editBook" ng-click="editBookDetails(book.bookId)">Edit</a></td>
                  </tr>
              </tbody>
          </table>
