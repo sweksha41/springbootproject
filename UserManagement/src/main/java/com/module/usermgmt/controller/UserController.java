@@ -1,5 +1,10 @@
 package com.module.usermgmt.controller;
 
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.module.usermgmt.model.User;
 import com.module.usermgmt.repository.UserDetailsServiceImpl;
 import com.module.usermgmt.repository.UserRepository;
@@ -103,8 +111,6 @@ public class UserController {
 		return libraryUsers;
 	}
 
-	
-	
 	@PostMapping("/register")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 		try {
@@ -115,5 +121,4 @@ public class UserController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 }

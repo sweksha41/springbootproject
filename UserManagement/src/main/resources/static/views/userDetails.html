@@ -35,29 +35,27 @@
                      <th width = 200px>Author</th>
                      <th></th>
                      <th width = 200px>Issued Date</th>
-                     <th></th>
                      <th width = 200px>Returned Date</th>
-                     <th></th>
                      <th width = 200px>Quantity</th>
+                     <th width = 200px>Fine(INR)</th>
                      <th></th>
-                     <th width = 200px>Fine</th>
+                     <th></th>
                  </tr>
              </thead>
              <tbody>
                  <tr ng-repeat="userBook in userBookList">
-                     <td><a ng-href="#!/bookDetails" ng-click="getBookDetails(userBook.bookId)"> {{userBook.bookId}}</a></td>
+                     <td>{{userBook.bookId}}</td>
                      <td></td>
                      <td>{{userBook.bookName}}</td>
                      <td></td>
                      <td>{{userBook.author}}</td>
                      <td></td>
                      <td>{{userBook.issuedDate | date:'dd/MM/yyyy'}}</td>
-                     <td></td>
                      <td>{{userBook.returnedDate | date:'dd/MM/yyyy'}}</td>
-                     <td></td>
                      <td>{{userBook.quantity}}</td>
-                     <td></td>
                      <td>{{userBook.fine | number : 2}}</td>
+                     <td colspan="2"><input type="button" value="Generate fine" ng-click="generateFine(userBook)" /></td>
+                     <td colspan="2"><input type="button" value="Return book" ng-click="ReturnBook(userBook)"/></td>
                  </tr>
              </tbody>
          </table>

@@ -14,6 +14,7 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 	$scope.errorMsg = "";
 	$scope.successMsg = "";
 	
+	
 
 	// HTTP POST/PUT methods for add/edit employee
 	$scope.registerUser = function() {
@@ -177,9 +178,6 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 		$scope.$parent.userBookList = userBookDetails.userBooks;
 		$scope.$parent.userFname = userBookDetails.firstName;
 		
-	//	$rootScope.userBookList = userBookDetails.userBooks;
-		//$rootScope.userFname = userBookDetails.firstName;
-		
 	};
 	
 	$scope.getBookDetails = function(bookId)
@@ -187,29 +185,56 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 		
 	};
 	
-	$scope.editBookDetails = function(book)
+	$scope.loadBookDetails = function(book)
 	{
-	
+		$scope.$parent.bookId = book.bookId;
 		$scope.$parent.bookName = book.bookName;
 		$scope.$parent.author = book.author;
 		$scope.$parent.form_availability = book.availableCount;
 		$scope.$parent.form_price = book.bookPrice;
+	};
+	
+	$scope.editBookDetails = function()
+	{
+		var book = new Object();
+		var bookAvailable = angular.element(document.getElementById("bookAvail"));  
+		var bookPrice = angular.element(document.getElementById("bookPrice"));  
+		book.bookId = $scope.$parent.bookId;
+		book.availableCount = bookAvailable.val();
+		book.bookPrice = bookPrice.val();
 		
-		
-		/*
-		var method = "POST";
+		var method = "PUT";
 		var url = "/books/edit";
 		var authorization = 'Bearer ' + $window.localStorage.getItem('token');
 
 		$http({
 			method : method,
 			url : url,
+			data : angular.toJson(book),
 			headers : {
 				'Content-Type' : 'application/json',
 				'Authorization' : authorization
 			}
-		}).then(onEditBooks, _error);*/
+		}).then(onEditBooks, _error);
+	}
+	
+	$scope.generateFine = function(userBook)
+	{
+		var method = "PUT";
+		var url = "/userbooks/generatefine";
+		var authorization = 'Bearer ' + $window.localStorage.getItem('token');
+		
+		$http({
+			method : method,
+			url : url,
+			data : angular.toJson(userBook),
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : authorization
+			}
+		}).then(onGenerateFine, _error);
 	};
+	
 	
 	function onGetUsers(response) {
 		// $location.path('users').search({jsonData: response.data });
@@ -232,6 +257,7 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 				bookObj.issuedDate = userBook.issuedDate;
 				bookObj.quantity = userBook.bookCount;
 				bookObj.fine = userBook.bookFine;
+				bookObj.user = user;
 
 				if (userBook.returnedDate == null)
 					userBook.returnedDate = '';
@@ -252,6 +278,30 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 	
 	function onEditBooks(response)
 	{
+		
+	}
+	
+	function onGenerateFine(response)
+	{
+		var responseData = response.data;
+		
+		var fine = responseData.bookFine;
+		var bookId = responseData.book.bookId;
+		
+		var userBookList = $scope.$parent.userBookList;
+		
+		for(var i =0; i< userBookList.length; i++)
+		{
+			if(userBookList[i].bookId = bookId)
+			{
+				$scope.$parent.userBookList[i].fine = fine;
+				break;
+			}
+		}
+		if(fine == 0)
+			alert("No overdue fine for this book.");
+		else
+			alert("Overdue fine: "+ fine);
 		
 	}
 
