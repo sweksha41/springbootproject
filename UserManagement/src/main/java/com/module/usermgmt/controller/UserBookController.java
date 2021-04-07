@@ -1,6 +1,7 @@
 package com.module.usermgmt.controller;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -58,6 +59,39 @@ public class UserBookController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	
+	@PutMapping("/returnbook")
+	public ResponseEntity<UserBooks> returnBook(@RequestBody String userBooks) {
+		try {
+			JsonNode userBookNode = new ObjectMapper().readTree(userBooks);
+			
+			//BigDecimal fine = calculateFine(userBookNode);
+			
+			Long bookId = userBookNode.get("bookId").asLong();
+			Long userId = userBookNode.at("/user/userId").asLong();
+			
+			User user = new User();
+			user.setUserId(userId);
+			
+			Book book = new Book();
+			book.setBookId(bookId);
+			
+			UserBooks savedUserBooks = userBookRepository.findByUserAndBook(user, book);
+			
+			
+			
+			savedUserBooks.setReturnedDate(new Timestamp(System.currentTimeMillis()));
+			
+			userBookRepository.save(savedUserBooks);
+			
+			return new ResponseEntity<>(savedUserBooks, HttpStatus.CREATED);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 
 	private BigDecimal calculateFine(JsonNode userBookNode) {
 		BigDecimal fine = new BigDecimal(0);

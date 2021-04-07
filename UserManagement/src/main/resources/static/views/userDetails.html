@@ -55,7 +55,7 @@
                      <td>{{userBook.quantity}}</td>
                      <td>{{userBook.fine | number : 2}}</td>
                      <td colspan="2"><input type="button" value="Generate fine" ng-click="generateFine(userBook)" /></td>
-                     <td colspan="2"><input type="button" value="Return book" ng-click="ReturnBook(userBook)"/></td>
+                     <td colspan="2"><input type="button" value="Return book" ng-click="returnBook(userBook)" ng-disabled="isReturned"/></td>
                  </tr>
              </tbody>
          </table>

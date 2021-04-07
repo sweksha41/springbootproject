@@ -1,6 +1,7 @@
 package com.module.usermgmt.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,13 +33,24 @@ public class BooksController {
 		return libraryBooks;
 	}
 
+	@GetMapping("/getavailable")
+	public List<Book> getAvailableBooks() {
+
+		List<Book> libraryBooks = getAllBooks();
+
+		List<Book> availableBooks = libraryBooks.stream().filter(book -> book.getAvailableCount() > 0)
+				.collect(Collectors.toList());
+
+		return availableBooks;
+	}
+
 	@PutMapping("/edit")
 	public ResponseEntity<Book> editBook(@RequestBody Book book) {
 
 		Book savedBook = bookRepository.findByBookId(book.getBookId());
 		savedBook.setAvailableCount(book.getAvailableCount());
 		savedBook.setBookPrice(book.getBookPrice());
-		
+
 		Book _book = bookRepository.save(savedBook);
 		return new ResponseEntity<>(_book, HttpStatus.CREATED);
 

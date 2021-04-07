@@ -170,6 +170,24 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 	};
 
 	
+	$scope.getAvailableBooks = function() {
+		// check if control is coming here
+
+		var method = "GET";
+		var url = "/books/getavailable";
+		var authorization = 'Bearer ' + $window.localStorage.getItem('token');
+
+		$http({
+			method : method,
+			url : url,
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : authorization
+			}
+		}).then(onGetAvailableBooks, _error);
+	};
+
+	
 
 	$scope.getUserDetails = function(userId) {
 
@@ -177,6 +195,18 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 		
 		$scope.$parent.userBookList = userBookDetails.userBooks;
 		$scope.$parent.userFname = userBookDetails.firstName;
+		
+		var userBookList = $scope.$parent.userBookList;
+		
+		for(var i =0; i< userBookList.length; i++)
+		{
+			if($scope.$parent.userBookList[i].returnedDate != "")
+			{
+				$scope.$parent.isReturned = true;
+			}
+			else
+				$scope.$parent.isReturned = false;
+		}
 		
 	};
 	
@@ -235,6 +265,22 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 		}).then(onGenerateFine, _error);
 	};
 	
+	$scope.returnBook = function(userBook)
+	{
+		var method = "PUT";
+		var url = "/userbooks/returnbook";
+		var authorization = 'Bearer ' + $window.localStorage.getItem('token');
+		$http({
+			method : method,
+			url : url,
+			data : angular.toJson(userBook),
+			headers : {
+				'Content-Type' : 'application/json',
+				'Authorization' : authorization
+			}
+		}).then(onReturnBook, _error);
+	}
+	
 	
 	function onGetUsers(response) {
 		// $location.path('users').search({jsonData: response.data });
@@ -278,7 +324,7 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 	
 	function onEditBooks(response)
 	{
-		
+		alert("Book details updated successfully!")
 	}
 	
 	function onGenerateFine(response)
@@ -303,6 +349,27 @@ app.controller('usersController', function($scope, $http, $timeout, $window) {
 		else
 			alert("Overdue fine: "+ fine);
 		
+	}
+	
+	function onReturnBook(response)
+	{
+		var responseData = response.data;
+		var bookId = responseData.book.bookId;
+		var returnDate = responseData.returnedDate;
+		
+		
+		var userBookList = $scope.$parent.userBookList;
+		
+		for(var i =0; i< userBookList.length; i++)
+		{
+			if(userBookList[i].bookId = bookId)
+			{
+				$scope.$parent.userBookList[i].returnedDate = returnDate;
+				break;
+			}
+		}
+		
+		$scope.$parent.isReturned = true;
 	}
 
 });
